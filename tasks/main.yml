@@ -107,7 +107,7 @@
 
         - include_tasks: pinned_vms.yml
 
-        - name: Start ovirt job session
+        - name: Start oVirt job session
           ovirt_job:
             auth: "{{ ovirt_auth }}"
             description: "Upgrading hosts"
@@ -119,7 +119,7 @@
             - "{{ host_info.ovirt_hosts }}"
           when: "item.id not in host_ids or stop_non_migratable_vms"
 
-        - name: Start ovirt job session
+        - name: Start oVirt job session
           ovirt_job:
             auth: "{{ ovirt_auth }}"
             description: "Upgrading hosts"
@@ -162,7 +162,7 @@
             scheduling_policy_properties: "{{ cluster_scheduling_policy_properties }}"
           when: use_maintenance_policy and cluster_policy.changed | default(false)
 
-        - name: Start again stopped VMs
+        - name: Start any previously stopped VMs
           ovirt_vm:
             auth: "{{ ovirt_auth }}"
             name: "{{ item }}"
@@ -171,7 +171,7 @@
           with_items:
             - "{{ stopped_vms | default([]) }}"
 
-        - name: Start again pin to host VMs
+        - name: Start any previously stopped, pinned-to-host VMs
           ovirt_vm:
             auth: "{{ ovirt_auth }}"
             name: "{{ item }}"

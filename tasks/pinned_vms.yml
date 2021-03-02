@@ -1,5 +1,5 @@
 ---
-- name: Create list of host IDs which has running non-migratable VM and are not down
+- name: Create list of host IDs with any VMs that are not down and non-migratable
   set_fact:
     host_ids_items: "{{ item.host.id }}"
   with_items:
@@ -11,6 +11,6 @@
     label: "{{ item.name }}"
   register: host_ids_result
 
-- name: Create list of host IDs which has pinned VM
+- name: Create list of host IDs with any pinned VMs
   set_fact:
     host_ids: "{{ host_ids_result.results | rejectattr('ansible_facts', 'undefined') | map(attribute='ansible_facts.host_ids_items') | list }}"
